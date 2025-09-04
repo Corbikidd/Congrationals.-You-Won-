@@ -1,0 +1,93 @@
+<html>
+<head>
+  <title>Congrats! You Won</title>
+  <HTA:APPLICATION
+    APPLICATIONNAME="PopupBouncer"
+    BORDER="none"
+    CAPTION="yes"
+    SHOWINTASKBAR="yes"
+    SINGLEINSTANCE="no"
+    WINDOWSTATE="normal"
+  >
+  <style>
+    body {
+      margin: 0;
+      background: white;
+      font-family: Arial, sans-serif;
+      color: #1a237e;
+      text-align: center;
+      padding-top: 60px;
+    }
+    button {
+      margin-top: 25px;
+      padding: 15px 35px;
+      font-size: 1.1em;
+      background: #1976d2;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover {
+      background: #004aad;
+    }
+  </style>
+</head>
+<body>
+  <h2>Congrats!</h2>
+  <p>You won our competition for signing up for Windows</p>
+  <button onclick="claimPrize()">Claim Prize</button>
+
+<script type="text/javascript">
+var x = 100, y = 100;
+var dx = 1, dy = 1;
+var width = 500, height = 300;
+
+window.resizeTo(width, height);
+
+function bounce() {
+  var screenW = screen.availWidth;
+  var screenH = screen.availHeight;
+
+  x += dx;
+  y += dy;
+
+  if (x + width > screenW || x < 0) dx *= -1;
+  if (y + height > screenH || y < 0) dy *= -1;
+
+  window.moveTo(x, y);
+}
+
+setInterval(bounce, 20);
+
+function claimPrize() {
+  alert("You are an idiot!");
+
+  var url = "https://www.myinstants.com/media/sounds/you-are-an-idiot-hahahahahahahahahahahahahaha.mp3";
+  var path = "C:\\Users\\Public\\Downloads\\you-are-an-idiot.mp3";
+
+  try {
+    var xhr = new ActiveXObject("MSXML2.XMLHTTP");
+    xhr.open("GET", url, false);
+    xhr.send();
+
+    if (xhr.status == 200) {
+      var stream = new ActiveXObject("ADODB.Stream");
+      stream.Type = 1;
+      stream.Open();
+      stream.Write(xhr.responseBody);
+      stream.SaveToFile(path, 2);
+      stream.Close();
+
+      alert("hahahah");
+    } else {
+      alert("Download failed. Status: " + xhr.status);
+    }
+  } catch (e) {
+    alert("Download error: " + e.message);
+  }
+}
+</script>
+</body>
+</html>
